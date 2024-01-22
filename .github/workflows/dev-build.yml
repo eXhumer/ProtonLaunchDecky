@@ -40,5 +40,5 @@ jobs:
       - name: Upload plugin
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.event.repository.name }}-${{ github.sha }}
-          path: out/${{ github.event.repository.name }}/
+          name: ${{ github.event.repository.name }}
+          path: out/${{ github.event.repository.name }}/*
