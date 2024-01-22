@@ -40,4 +40,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}
-          path: out/*.zip
+          path: out/${{ github.event.repository.name }}.zip
