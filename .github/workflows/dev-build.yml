@@ -1,13 +1,33 @@
-name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
+name: dev-build
+run-name: Build plugin for development
 on: [push]
 jobs:
-  check-bats-version:
+  build-plugin:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup latest Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '14'
-      - run: npm install -g bats
-      - run: bats -v
+          node-version: latest
+
+      - name: Setup latest PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - name: Update decky-frontend-lib
+        run: pnpm update decky-frontend-lib --latest
+
+      - name: Build plugin
+        run: |
+          pnpm i
+          pnpm run build
+
+      - name: Upload plugin
+        uses: actions/upload-artifact@v2
+        with:
+          name: plugin
+          path: out/
