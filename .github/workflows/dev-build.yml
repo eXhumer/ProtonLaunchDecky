@@ -21,10 +21,20 @@ jobs:
       - name: Update decky-frontend-lib
         run: pnpm update decky-frontend-lib --latest
 
-      - name: Build plugin
+      - name: Build frontend from source
         run: |
           pnpm i
           pnpm run build
+
+      - name: Download Decky Plugin CLI
+        run: |
+          mkdir $(pwd)/cli
+          curl -L -o $(pwd)/cli/decky "https://github.com/SteamDeckHomebrew/cli/releases/latest/download/decky"
+          chmod +x $(pwd)/cli/decky
+
+      - name: Build plugin
+        run: |
+          $(pwd)/cli/decky plugin build $(pwd)
 
       - name: Upload plugin
         uses: actions/upload-artifact@v2
