@@ -35,9 +35,10 @@ jobs:
       - name: Build plugin
         run: |
           $(pwd)/cli/decky plugin build $(pwd)
+          unzip out/${{ github.event.repository.name }}.zip -d out/${{ github.event.repository.name }}
 
       - name: Upload plugin
         uses: actions/upload-artifact@v4
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}
-          path: out/${{ github.event.repository.name }}.zip
+          path: out/${{ github.event.repository.name }}/
