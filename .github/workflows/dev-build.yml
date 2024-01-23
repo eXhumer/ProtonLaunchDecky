@@ -1,6 +1,6 @@
 name: dev-build
 run-name: Build plugin for development
-on: [push]
+on: [push, workflow_dispatch]
 jobs:
   build-plugin:
     runs-on: ubuntu-latest
