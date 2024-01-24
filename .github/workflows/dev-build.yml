@@ -37,8 +37,12 @@ jobs:
           $(pwd)/cli/decky plugin build $(pwd)
           unzip out/${{ github.event.repository.name }}.zip -d out/${{ github.event.repository.name }}
 
+      - name: Set outputs
+        id: vars
+        run: echo "SHA_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
       - name: Upload plugin
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.event.repository.name }}
+          name: ${{ github.event.repository.name }}-${{ steps.vars.outputs.SHA_SHORT }}
           path: out/${{ github.event.repository.name }}/*
